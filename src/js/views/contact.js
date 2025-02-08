@@ -5,15 +5,16 @@ import { Context } from "../store/appContext";
 
 import "../../styles/demo.css";
 
-const Contact () {
+function Contact () {
     return(
     <div className="showingContact">
       <div>
         {/* image */}
       </div>
       <div>
-        {/* contact info */}
+        contact info
       </div>
 
     </div>
 )}
+export default Contact

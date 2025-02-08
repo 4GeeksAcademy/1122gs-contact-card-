@@ -10,6 +10,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 try {
                     const response = await fetch(url + "agendas/"+ slug, {method:"POST"});
                     if(!response.ok){
+                        console.log("User already exist")
                         getActions().getContacts();
                         return;
                     }
@@ -24,6 +25,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     const response = await fetch(url + "agendas/"+ slug + "/contacts");
                     const data = response.json()
                     if(data){
+                        console.log("Here are your contacts: ", data)
                         setStore({agendas: data.contacts})
                     }
                 } catch(error){

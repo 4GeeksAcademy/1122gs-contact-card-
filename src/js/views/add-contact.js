@@ -10,18 +10,26 @@ function AddContact () {
         <div className="contactPage">
             <h1>ADD Contacts</h1>
             <div>
-                <label for="name">Name</label>
+                <label htmlFor="name">Name</label>
                 <input id="name" type="text"/>
-                <label for="email">Email</label>
+            </div>
+            <div>
+                <label htmlFor="email">Email</label>
                 <input type="text" id="email"/>
-                <label for="phoneNumber"></label>
+            </div>
+            <div>    
+                <label htmlFor="phoneNumber"></label>
                 <input type="text" id="phoneNumber"/>
-                <label for="address">Address</label>
+            </div>
+            <div>    
+                <label htmlFor="address">Address</label>
                 <input type="text" id="address"/>
             </div>
-            <button className="btn btn-success" onClick={()=>action.updateCotact}>
+
+            <button className="btn btn-success" onClick={()=>action.AddContact}>
                 Save
             </button>
+            
             <Link to="/contact">
                go back to contact list
             </Link>
@@ -29,3 +37,4 @@ function AddContact () {
         </div>
     )
 }
+export default AddContact
