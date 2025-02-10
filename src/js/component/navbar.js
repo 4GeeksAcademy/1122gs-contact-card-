@@ -3,8 +3,9 @@ import { Link } from "react-router-dom";
 
 export const Navbar = () => {
 	return (
-		<Link to='/add-contact'>
-			<button className="btn btn-success"> Add Contact</button>
-		</Link>
+		<div>
+			<nav className="navbar navbar-light bg-light mb-3">
+			</nav>
+		</div>
 	);
 };

@@ -46,7 +46,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                         body: JSON.stringify(contact)
                     });
                     if (response.ok) {
-                        getActions().createContacts();
+                        getActions().getContacts();
                     }
                 } catch (error) {
                     console.error("Error adding contact:", error);

@@ -6,14 +6,21 @@ import { Context } from "../store/appContext";
 import "../../styles/demo.css";
 
 function Contact () {
+  const { store, actions } = useContext(Context);
+
+    // useEffect(() => {
+    //     actions.getContacts();  
+    // }, []);
+
     return(
     <div className="showingContact">
+      <Link to='/add-contact'>
+            <button className="btn btn-success"> Add Contact</button>
+      </Link>
       <div>
-        {/* image */}
+        {/* {actions.getContacts()} */}
       </div>
-      <div>
-        contact info
-      </div>
+
 
     </div>
 )}
