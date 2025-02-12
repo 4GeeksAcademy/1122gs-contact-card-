@@ -15,9 +15,12 @@ function Contact() {
 
   return (
     <div className="showingContact">
+      <div className="addNewContact" >
       <Link to="/add-contact">
-        <button className="btn btn-success"> Add Contact</button>
+        <button className="btn btn-success "> Add Contact</button>
       </Link>
+      </div>
+
       <div>
         {store.contacts?.map((contact,index) =>(
           <ContactCard  key={index} contact={contact}/>

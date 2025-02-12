@@ -20,6 +20,26 @@ button.saveButton{
 input#phone{
     margin-left: 20px;
 }
-/* input#name,#email{
-    margin-left: 80px;
-} */
+.addNewContact{
+    width: 100%;
+    text-align: right;
+    margin-bottom: 20px;
+
+}
+.editAndDelete{
+    text-align: right;
+    flex: inline;
+}
+.contactImage{
+    border-radius: 100%;
+    height: 100px;
+    padding-left: 10px;
+    padding-top: 10px;
+    width:20%
+}
+.updateButton{
+    width: 100%;
+}
+div.card-body{
+    width: 80%;
+}

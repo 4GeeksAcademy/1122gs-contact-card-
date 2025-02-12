@@ -27,7 +27,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             return resp.json();
           })
           .then((data) => {
-            console.log("Here is your data",data);
+            console.log("Here is your data", data);
             setStore({ contacts: data.contacts });
           })
 
@@ -64,56 +64,69 @@ const getState = ({ getStore, getActions, setStore }) => {
           .catch((error) => {
             console.log("Error adding contact", error);
           });
-
-        // const newContact = await response.json();
-        // setStore((prevState) => ({
-        //     ...prevState,
-        //     contacts: [...prevState.contacts, newContact]
-        // }));
       },
 
-      deleteContact: async (id) => {
-        try {
-          const response = await fetch(
-            url + slug + "/contats" + "/contacts{id}",
-            {
-              method: "DELETE",
-            }
-          );
-          if (response.ok) {
-            getActions().createContacts();
+      deleteContact: (id) => {
+        const store = getStore();
+
+        fetch(
+          `https://playground.4geeks.com/contact/agendas/gs1122/contacts/${id}`,
+          {
+            method: "DELETE",
           }
-        } catch (error) {
-          console.error("Error deleting contact:", error);
-        }
+        )
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Error deleting contact");
+            }
+            return response.json();
+          })
+          .then(() => {
+            const newContacts = getStore().contacts.filter(
+              (t, currentIndex) => t.id !== id
+            );
+            getStore().contacts = newContacts;
+            console.log(`Contact deleted successfully`);
+          })
+          .catch((error) => console.error("Delete error:", error));
       },
 
-      updateContact:(id, updatedContact) => {
-       const updatedContact = {
-        name: "",
-        phone: "",
-        email:"",
-        address: ""
-       }
-        fetch(`https://playground.4geeks.com/contact/agendas/gs1122/contacts/${id}`, {
+      updateContact: (id, updatedContacts) => {
+        fetch(
+          `https://playground.4geeks.com/contact/agendas/gs1122/contacts/${id}`,
+          {
             method: "PUT",
-            headers:{
-                "Content-Type": "application/json"
+            headers: {
+              "Content-Type": "application/json",
             },
-            body: JSON.stringify(updatedContact)
-        })
+            body: {
+              name: "",
+              phone: "",
+              email: "",
+              address: "",
+            },
+          }
+        )
           .then((resp) => {
             if (!resp.ok) throw Error(resp.statusText);
             return resp.json();
           })
           .then((data) => {
-            console.log("Contact updated", data);
-            getActions().getContacts();
+            if (data) {
+              const newContact = store.contacts.map((contact) => {
+                if (contact.id == id) {
+                  contact = data;
+                }
+                return contact;
+              });
+              setStore({ contacts: newContact });
+            }
+            console.log("Contact updated", contact);
+            // getActions().getContacts();
           })
           .catch((error) => {
             console.log("Error editing contact", error);
           });
-        
       },
     },
   };

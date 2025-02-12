@@ -6,6 +6,7 @@ import { Context } from "../store/appContext";
 
 import "../../styles/demo.css";
 
+
 const handleSubmit = async (e) => {
     e.preventDefault();
     try{
@@ -15,8 +16,11 @@ const handleSubmit = async (e) => {
     } catch (error){
       console.log('Error adding contact', error)
     }
-
-export const EditCard = () => {
+  }
+export const EditCard = (contact) => {
+  const { store, actions } = useContext(Context)
+  const navigate = useNavigate()
+  
   return (
     <div className="contactPage">
       <h1>Edit Contact</h1>
@@ -83,16 +87,16 @@ export const EditCard = () => {
         </div>
         <button
           type="submit"
-          className="btn btn-success saveButton"
+          className="btn btn-success updateButton"
           onClick={() => {
-            actions.addContact();
+            actions.updateContact();
           }}
         >
-          Save
+         Update
         </button>
       </form>
 
       <button onClick={() => navigate("/")}>Go back to contact list</button>
     </div>
   );
-};
+}
