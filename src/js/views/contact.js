@@ -4,24 +4,27 @@ import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 
 import "../../styles/demo.css";
+import { ContactCard } from "../component/contactCard";
 
-function Contact () {
+function Contact() {
   const { store, actions } = useContext(Context);
 
-    // useEffect(() => {
-    //     actions.getContacts();  
-    // }, []);
+  // useEffect(() => {
+  //     actions.getContacts();
+  // }, []);
 
-    return(
+  return (
     <div className="showingContact">
-      <Link to='/add-contact'>
-            <button className="btn btn-success"> Add Contact</button>
+      <Link to="/add-contact">
+        <button className="btn btn-success"> Add Contact</button>
       </Link>
       <div>
-        {/* {actions.getContacts()} */}
+        {store.contacts?.map((contact,index) =>(
+          <ContactCard  key={index} contact={contact}/>
+        ))}
+        
       </div>
-
-
     </div>
-)}
-export default Contact
+  );
+}
+export default Contact;

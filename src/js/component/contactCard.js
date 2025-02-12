@@ -4,14 +4,16 @@ import { useNavigate } from "react-router";
 import { stringify } from 'query-string';
 
 export const ContactCard = ({contact}) => {
-  const {store,actions} = useContext(Context);
-  const contactId = contact.id;
-  const contactIdString = contactId.toString();
+  const {actions} = useContext(Context);
+  const {name, phone, email, address} = contact
+  // const contactId = contact.id;
+  // const contactIdString = contactId.toString();
   const navigate=  useNavigate();
-  console.log(contactIdString);
+  // console.log(contactIdString);
 
-  const handleClick = () => {
-    navigate("edit" + contactIdString );
+  // const handleClick = () => {
+  //   navigate("edit" )}
+  
 
   
   return (
@@ -22,12 +24,12 @@ export const ContactCard = ({contact}) => {
         </div>
         <div className="col-md-8">
           <div className="card-body">
-            <h3 className="card-title">{contact.name}</h3>
-            <p className="card-text fs-3">{contact.email}</p>
-            <p className="card-text fs-3">{contact.phone}</p>
-            <p className="card-text fs-3">{contact.address}</p>
-            <button className="btn btn-secondary" onClick={handleClick} >Edit Contact</button>
-            <button className="btn btn-danger" onClick={() => actions.deleteContact(contact.id)}>Delete Contact</button>
+            <h3 className="card-title">{name}</h3>
+            <p className="card-text fs-3">{phone}</p>
+            <p className="card-text fs-3">{email}</p>
+            <p className="card-text fs-3">{address}</p>
+            {/* <button className="btn btn-secondary" onClick={handleClick} >Edit Contact</button>
+            <button className="btn btn-danger" onClick={() => actions.deleteContact(contact)}>Delete Contact</button> */}
           </div>
         </div>
       </div>
@@ -38,4 +40,4 @@ export const ContactCard = ({contact}) => {
   
     
 
-}
+
