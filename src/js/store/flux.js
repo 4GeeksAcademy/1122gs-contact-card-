@@ -88,21 +88,32 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
-      updateContact: async (id, updatedContact) => {
-        try {
-          const response = await fetch(url + slug, {
+      updateContact:(id, updatedContact) => {
+       const updatedContact = {
+        name: "",
+        phone: "",
+        email:"",
+        address: ""
+       }
+        fetch(`https://playground.4geeks.com/contact/agendas/gs1122/contacts/${id}`, {
             method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
+            headers:{
+                "Content-Type": "application/json"
             },
-            body: JSON.stringify(updatedContact),
+            body: JSON.stringify(updatedContact)
+        })
+          .then((resp) => {
+            if (!resp.ok) throw Error(resp.statusText);
+            return resp.json();
+          })
+          .then((data) => {
+            console.log("Contact updated", data);
+            getActions().getContacts();
+          })
+          .catch((error) => {
+            console.log("Error editing contact", error);
           });
-          if (response.ok) {
-            getActions().createContacts();
-          }
-        } catch (error) {
-          console.error("Error updating contact:", error);
-        }
+        
       },
     },
   };

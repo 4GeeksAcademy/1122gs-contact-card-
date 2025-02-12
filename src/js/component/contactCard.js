@@ -11,8 +11,7 @@ export const ContactCard = ({contact}) => {
   const navigate=  useNavigate();
   // console.log(contactIdString);
 
-  // const handleClick = () => {
-  //   navigate("edit" )}
+
   
 
   
@@ -28,8 +27,8 @@ export const ContactCard = ({contact}) => {
             <p className="card-text fs-3">{phone}</p>
             <p className="card-text fs-3">{email}</p>
             <p className="card-text fs-3">{address}</p>
-            {/* <button className="btn btn-secondary" onClick={handleClick} >Edit Contact</button>
-            <button className="btn btn-danger" onClick={() => actions.deleteContact(contact)}>Delete Contact</button> */}
+            <Link to = {`/edit/${contact.id}`}><button className="btn btn-secondary">Edit Contact</button></Link>
+            <button className="btn btn-danger" onClick={() => actions.deleteContact(contact)}>Delete Contact</button>
           </div>
         </div>
       </div>
