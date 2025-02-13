@@ -2,8 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router";
 import { stringify } from "query-string";
-import { Link } from "react-router-dom"; 
-
+import { Link } from "react-router-dom";
 
 export const ContactCard = ({ contact }) => {
   const { actions } = useContext(Context);
@@ -31,11 +30,16 @@ export const ContactCard = ({ contact }) => {
             <p className="card-text fs-6">{address}</p>
             <div className="editAndDelete d-flex justify-content-end align-items-center mt-2">
               <Link to={`/edit/${contact.id}`}>
-                <button className="btn btn-secondary me-3" onClick={()=>navigate(`/edit/${id}`)}>Edit Contact</button>
+                <button
+                  className="btn btn-secondary me-3"
+                  onClick={() => navigate(`/edit/${id}`)}
+                >
+                  Edit Contact
+                </button>
               </Link>
               <button
                 className="btn btn-danger"
-                onClick={() => actions.deleteContact(id)}
+                onClick={() => actions.deleteContact(contact.id)}
               >
                 Delete Contact
               </button>

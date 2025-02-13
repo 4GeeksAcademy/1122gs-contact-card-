@@ -1,26 +1,49 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useFetcher, useNavigate, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 import { Context } from "../store/appContext";
 
 import "../../styles/demo.css";
 
+export const EditCard = () => {
+  const { id } = useParams();
+  const { store, actions } = useContext(Context);
+  const navigate = useNavigate();
+  const [contact, setContact] = useState({
+    name: "",
+    email: "",
+    phoneNumber: "",
+    address: "",
+  });
+  useEffect(() => {
+    actions.getContacts();
+    store.contacts.map((item) => {
+      if (item.id == id) {
+        setContact(item);
+      }
+    });
+  }, []);
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setContact((prevContact) => ({
+      ...prevContact,
+      [id]: value,
+    }));
+  };
 
-const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    try{
-      await actions.addContact(contact);
+    try {
+      await actions.updateContact(contact);
       await actions.getContacts();
-      navigate("/")
-    } catch (error){
-      console.log('Error adding contact', error)
+      navigate("/");
+    } catch (error) {
+      console.log("Error adding contact", error);
     }
-  }
-export const EditCard = (contact) => {
-  const { store, actions } = useContext(Context)
-  const navigate = useNavigate()
-  
+  };
+
+  console.log(contact);
   return (
     <div className="contactPage">
       <h1>Edit Contact</h1>
@@ -31,12 +54,7 @@ export const EditCard = (contact) => {
             id="name"
             type="text"
             value={contact.name}
-            onChange={(e) =>
-              setContact((prevContact) => ({
-                ...prevContact,
-                name: e.target.value,
-              }))
-            }
+            onChange={handleChange}
             required
           />
         </div>
@@ -46,12 +64,7 @@ export const EditCard = (contact) => {
             id="email"
             type="text"
             value={contact.email}
-            onChange={(e) =>
-              setContact((prevContact) => ({
-                ...prevContact,
-                email: e.target.value,
-              }))
-            }
+            onChange={handleChange}
             required
           />
         </div>
@@ -61,12 +74,7 @@ export const EditCard = (contact) => {
             id="phone"
             type="text"
             value={contact.phone}
-            onChange={(e) =>
-              setContact((prevContact) => ({
-                ...prevContact,
-                phone: e.target.value,
-              }))
-            }
+            onChange={handleChange}
             required
           />
         </div>
@@ -76,27 +84,16 @@ export const EditCard = (contact) => {
             id="address"
             type="text"
             value={contact.address}
-            onChange={(e) =>
-              setContact((prevContact) => ({
-                ...prevContact,
-                address: e.target.value,
-              }))
-            }
+            onChange={handleChange}
             required
           />
         </div>
-        <button
-          type="submit"
-          className="btn btn-success updateButton"
-          onClick={() => {
-            actions.updateContact();
-          }}
-        >
-         Update
+        <button type="submit" className="btn btn-success updateButton">
+          Update
         </button>
       </form>
 
       <button onClick={() => navigate("/")}>Go back to contact list</button>
     </div>
   );
-}
+};

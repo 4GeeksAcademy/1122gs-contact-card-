@@ -68,7 +68,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       deleteContact: (id) => {
         const store = getStore();
-
+        // step1 fetch the delete endpoint
+        // if response is ok, then run getContacts()
+        // if response not ok then log error
         fetch(
           `https://playground.4geeks.com/contact/agendas/gs1122/contacts/${id}`,
           {
@@ -79,53 +81,38 @@ const getState = ({ getStore, getActions, setStore }) => {
             if (!response.ok) {
               throw new Error("Error deleting contact");
             }
+            getActions().getContacts();
             return response.json();
-          })
-          .then(() => {
-            const newContacts = getStore().contacts.filter(
-              (t, currentIndex) => t.id !== id
-            );
-            getStore().contacts = newContacts;
-            console.log(`Contact deleted successfully`);
           })
           .catch((error) => console.error("Delete error:", error));
       },
 
-      updateContact: (id, updatedContacts) => {
-        fetch(
-          `https://playground.4geeks.com/contact/agendas/gs1122/contacts/${id}`,
-          {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: {
-              name: "",
-              phone: "",
-              email: "",
-              address: "",
-            },
-          }
-        )
+      updateContact: (contact) => {
+        const url = `https://playground.4geeks.com/contact/agendas/gs1122/contacts/${contact.id}`;
+        const contactPayLoad = {
+          name: contact.name,
+          phone: contact.phone,
+          email: contact.email,
+          address: contact.address,
+        };
+        const request = {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(contactPayLoad),
+        };
+        fetch(url, request)
           .then((resp) => {
             if (!resp.ok) throw Error(resp.statusText);
             return resp.json();
           })
           .then((data) => {
-            if (data) {
-              const newContact = store.contacts.map((contact) => {
-                if (contact.id == id) {
-                  contact = data;
-                }
-                return contact;
-              });
-              setStore({ contacts: newContact });
-            }
-            console.log("Contact updated", contact);
-            // getActions().getContacts();
+            console.log("Contact updated", data);
+            getActions().getContacts();
           })
           .catch((error) => {
-            console.log("Error editing contact", error);
+            console.log("Error adding contact", error);
           });
       },
     },
