@@ -10,7 +10,7 @@ export const ContactCard = ({ contact }) => {
   // const contactId = contact.id;
   // const contactIdString = contactId.toString();
   const navigate = useNavigate();
-  // console.log(contactIdString);
+  
 
   return (
     <div className="card mb-3" style={{ maxWidth: "100%" }}>

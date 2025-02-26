@@ -17,16 +17,13 @@ function AddContact () {
         address: ""
     });
 
-    // const handleChange = (e) => {
-    //     setContact({ ...contact, [e.target.id]: e.target.value });
-  //  };
-
      const handleSubmit = async (e) => {
       e.preventDefault();
       try{
         await actions.addContact(contact);
         await actions.getContacts();
         navigate("/")
+        
       } catch (error){
         console.log('Error adding contact', error)
       }
